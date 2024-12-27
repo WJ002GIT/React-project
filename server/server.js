@@ -3,8 +3,13 @@ const cors = require("cors");
 const app = express();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+const portfinder = require('portfinder')
 
 
+// Resolve the absolute path to the root directory
+const rootEnvPath = path.resolve(__dirname, '../.env');
 // as we are sharign a common.env folder, we config to run at root
 const dotenv = require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -42,7 +47,23 @@ app.get("/api", (req,res) => {
     ]});
 });
 
-const port = process.env.PORT || 8080;
-app.listen(port,() => {
-    console.log(`server listening at port:${port}`)
-});
+// const port = process.env.PORT || 8080;
+
+const desiredPort = process.env.PORT || 8080;
+//this is to create an adaptable port as not every computer have 5000 available
+portfinder.getPortPromise({ port: desiredPort })
+  .then((port) => {
+    app.listen(port, () => {
+      console.log(`Server is running on port: ${port}`);
+      // Save the dynamic port to a .env file
+      fs.writeFileSync(rootEnvPath, `VITE_BACKEND_PORT=${port}`, { flag: 'w' });
+    });
+  })
+  .catch((err) => {
+    console.error('Error finding available port:', err);
+  });
+
+
+// app.listen(port,() => {
+//     console.log(`server listening at port:${port}`)
+// });

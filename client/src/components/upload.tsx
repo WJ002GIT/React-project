@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 interface FileUploadProps {
+  backendUrl: string;
   onFileLocationUpdate: (location: string) => void; // Define prop type for callback
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFileLocationUpdate }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ backendUrl, onFileLocationUpdate }) => {
   const [file, setFile] = useState<File | null>(null);
   const [fileLocation, setFileLocation] = useState<string | null>(null);
 
@@ -27,7 +28,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileLocationUpdate }) => {
     formData.append("csvFile", file);
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
+      const response = await fetch(`${backendUrl}/upload`, {
         method: "POST",
         body: formData,
       });

@@ -35,13 +35,20 @@ function App() {
   const { fetchCsvData } = Displaydata();
   const [fileLocation, setFileLocation] = useState<string | null>(null);
 
+  //find back end dynamic port
+  const backendPort = import.meta.env.VITE_BACKEND_PORT || '5000';
+  const backendUrl = `http://localhost:${backendPort}`;
+
+
   const handleFileLocationUpdate = (location: string) => {
     setFileLocation(location);
     console.log("Received file location:", location);
   };
+
   useEffect(() => {
     if (fileLocation) {
-      fetchCsvData(`http://localhost:5000${fileLocation}`, setData);
+      fetchCsvData(`${backendUrl}${fileLocation}`, setData);
+      console.log('dynamic port location',`${backendUrl}${fileLocation}`)
     }
   }, [fileLocation]); // Add fileLocation as a dependency
   if (data && data.length > 0) {
@@ -64,7 +71,6 @@ function App() {
   //       setBackendData(data);
   //     });
   // }, []);
-
   return (
     <div>
       {alertVisible && data && (
@@ -76,8 +82,11 @@ function App() {
         Button Component
       </Button>
 
-      <Upload onFileLocationUpdate={handleFileLocationUpdate}></Upload>
+      <Upload backendUrl={backendUrl} onFileLocationUpdate={handleFileLocationUpdate}></Upload>
 
+      <div>
+         <h1>Backend is running at: {backendUrl}</h1>
+      </div>
       {fileLocation && (
         <div>
           <p>The file is available at:</p>
