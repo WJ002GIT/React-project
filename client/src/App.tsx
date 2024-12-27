@@ -5,13 +5,14 @@ import Alert from "./components/Alert";
 import Button from "./components/Button";
 import Upload from "./components/upload";
 import Displaydata from "./components/Displaydata";
+import PaginatedTable from "./components/PaginaedTable";
 import Papa from "papaparse";
 
 function App() {
-  interface User {
-    "First Name": string;
-    "Last Name": string;
-  }
+  // interface User {
+  //   "First Name": string;
+  //   "Last Name": string;
+  // }
 
   // let items = [
   //   "NewYork",
@@ -28,7 +29,9 @@ function App() {
   // };
   const [alertVisible, setalertVisible] = useState<boolean>(false);
   // const [backendData, setBackendData] = useState<User | null>(null);
-  const [data, setData] = useState<User[] | null>(null);
+  // const [data, setData] = useState<User[] | null>(null);
+  const [data, setData] = useState<Array<Record<string, any>> | null>(null);
+  const [keys, setKeys] = useState<string[]>([]);
   const { fetchCsvData } = Displaydata();
   const [fileLocation, setFileLocation] = useState<string | null>(null);
 
@@ -41,8 +44,19 @@ function App() {
       fetchCsvData(`http://localhost:5000${fileLocation}`, setData);
     }
   }, [fileLocation]); // Add fileLocation as a dependency
+  if (data && data.length > 0) {
+    console.log("this is my data", data);
 
-  console.log("this is my data", data);
+    // keys.forEach((key) => {
+    //   console.log(`Key: ${key}, Value: ${data[0][key]}`);
+    // });
+    if (data[0] && data[0].length > 0) {
+      const extractedKeys = Object.keys(data[0]);
+      console.log("Keys in data[0]:", keys);
+      setKeys(extractedKeys);
+    }
+  }
+
   // useEffect(() => {
   //   fetch("/api")
   //     .then((response) => response.json())
@@ -55,18 +69,7 @@ function App() {
     <div>
       {alertVisible && data && (
         <Alert>
-          <ol>
-            {/* Filter out rows where 'First Name' is empty or the row is completely empty */}
-            {data
-              .filter(
-                (user) =>
-                  user["First Name"] && // Check that "First Name" exists
-                  Object.values(user).some((value) => value) // Ensure there's at least one non-empty field
-              )
-              .map((user, index) => (
-                <li key={index}>{user["First Name"]}</li>
-              ))}
-          </ol>
+          <PaginatedTable data={data} />
         </Alert>
       )}
       <Button onClick={() => setalertVisible(!alertVisible)} color="danger">
