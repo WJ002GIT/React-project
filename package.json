@@ -1,0 +1,18 @@
+{
+  "name": "react_node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run dev --prefix server\" \"node start-client.js\"",
+    "build": "npm run build --prefix client",
+    "test": "npm test --prefix client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.1",
+    "sleep-promise": "^9.1.0"
+  }
+}
