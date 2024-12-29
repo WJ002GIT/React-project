@@ -7,6 +7,7 @@ import Upload from "./components/upload";
 import Displaydata from "./components/Displaydata";
 import PaginatedTable from "./components/PaginaedTable";
 import Papa from "papaparse";
+import AvailableFiles from "./components/AvailableFiles";
 
 function App() {
   // interface User {
@@ -36,21 +37,27 @@ function App() {
   const [fileLocation, setFileLocation] = useState<string | null>(null);
 
   //find back end dynamic port
-  const backendPort = import.meta.env.VITE_BACKEND_PORT || '5000';
+  const backendPort = import.meta.env.VITE_BACKEND_PORT || "8080";
   const backendUrl = `http://localhost:${backendPort}`;
-
 
   const handleFileLocationUpdate = (location: string) => {
     setFileLocation(location);
     console.log("Received file location:", location);
   };
 
+  const handleFileSelection = (fileName: string) => {
+    fetchCsvData(`${backendUrl}${fileName}`, setData);
+    console.log("dynamic port location", `${backendUrl}${fileLocation}`);
+  };
+
   useEffect(() => {
     if (fileLocation) {
+      //fetch csv daa from srver address and send it to setData
       fetchCsvData(`${backendUrl}${fileLocation}`, setData);
-      console.log('dynamic port location',`${backendUrl}${fileLocation}`)
+      console.log("dynamic port location", `${backendUrl}${fileLocation}`);
     }
   }, [fileLocation]); // Add fileLocation as a dependency
+
   if (data && data.length > 0) {
     console.log("this is my data", data);
 
@@ -72,34 +79,53 @@ function App() {
   //     });
   // }, []);
   return (
-    <div>
-      {alertVisible && data && (
-        <Alert>
+    <div className="main">
+      {/* Alert and Paginated Table Section */}
+      {/* {alertVisible && data && (
+        <section className="Alert">
           <PaginatedTable data={data} />
-        </Alert>
+        </section>
+      )} */}
+      {data && (
+        <section className="table">
+          <PaginatedTable
+            data={data}
+            fileName={fileLocation?.replace("/uploads/", "")}
+          />
+        </section>
       )}
-      <Button onClick={() => setalertVisible(!alertVisible)} color="danger">
-        Button Component
-      </Button>
+      {/* Button to toggle alert visibility */}
+      {/* <section>
+        <Button onClick={() => setalertVisible(!alertVisible)} color="danger">
+          Toggle Alert
+        </Button>
+      </section> */}
 
-      <Upload backendUrl={backendUrl} onFileLocationUpdate={handleFileLocationUpdate}></Upload>
+      {/* File Upload Section */}
+      <section>
+        <Upload
+          backendUrl={backendUrl}
+          onFileLocationUpdate={handleFileLocationUpdate}
+        />
+      </section>
 
-      <div>
-         <h1>Backend is running at: {backendUrl}</h1>
-      </div>
+      {/* Backend URL Display */}
+      {/* <section>
+        <h1>Backend is running at: {backendUrl}</h1>
+      </section> */}
+
+      {/* File Location Display */}
       {fileLocation && (
-        <div>
-          <p>The file is available at:</p>
-          <p>{fileLocation}</p> {/* Display the file location */}
-        </div>
+        <section className="file-location">
+          <p>The file you have most recently uploaded is:</p>
+          <p>{fileLocation.replace("/uploads/", "")}</p>
+        </section>
       )}
-      {/* <Displaydata></Displaydata> */}
-      {/* pass the values down into the component */}
-      {/* <ListGroup
-        items={items}
-        heading="Cities"
-        onSelectItem={handleSelectItem}
-      ></ListGroup> */}
+
+      {/* Available Files Section */}
+      <section>
+        <AvailableFiles onHandleFile={handleFileSelection} />
+      </section>
     </div>
   );
 }

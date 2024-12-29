@@ -1,10 +1,142 @@
+/* Set a neutral, clean gradient background for the entire app */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #e2e8f0, #f1f5f9);
+    margin: 0;
+    padding: 0;
+    color: #333;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Main container styling */
+  .main {
+    width: 900px;
+    /* max-height: 80vh; */
+    height: 100%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  /* Section styling for each content block */
+  section {
+    margin-bottom: 20px;
+  }
+  
+  /* Button styling */
+  button {
+    background-color: #ff6363;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #ff4c4c;
+  }
+  
+  /* table box styling */
+  .table {
+    padding: 20px;
+    background-color: #fef2f2;
+    border: 1px solid #fdd6d6;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #f87171;
+  }
+  /* File upload container styling */
+  .Upload {
+    margin-top: 20px;
+    background-color: #f9fafb;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #1f2937;
+    font-size: 24px;
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  div {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Available Files section */
+  .AvailableFiles {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+  }
+  
+  .AvailableFiles p {
+    font-weight: bold;
+    color: #4b5563;
+  }
+  
+  /* Apply better styling to file location display */
+  .file-location {
+    background-color: #f1f5f9;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #374151;
+    word-wrap: break-word;
+  }
+  
+  /* Style for the table component */
+  .PaginatedTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .PaginatedTable .name h1 {
+    background-color: transparent;
+    color: #333; /* Dark text for better contrast */
+    font-size: 20px; /* Slightly larger font for better readability */
+    font-weight: 600; /* Make the text bold */
+    padding: 12px 20px; /* Add padding for better spacing */
+    border-radius: 5px; /* Rounded corners for a softer look */
+    margin: 0; /* Remove default margin */
+    text-transform: uppercase; /* Capitalize for a cleaner look */
+    letter-spacing: 1px; /* Slight letter spacing for elegance */
+  }
+  
+
+  .PaginatedTable .table_container{
+    height: 50vh;
+  }
+  .PaginatedTable th{
+    white-space: nowrap;
+  }
+  .PaginatedTable th, .PaginatedTable td {
+    padding: 10px;
+    text-align: left;
+  }
+  
 .table.table-bordered th { 
     border: 1px solid black;
     background-color: rgb(173, 173, 173);
 }
-.table_container{
-    width: 70vw;
-    height: 50vh;
-    margin-left: 15vw;
-    margin-bottom: 30px;
+
+
+.dropdown.dropdown-menu{
+  border: 1px solid red;
 }

@@ -4,9 +4,12 @@ type User = Record<string, any>;
 
 interface PaginatedTableProps {
   data: User[]; // Explicitly type the `data` prop
+  fileName: string | undefined;
 }
-const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
+
+const PaginatedTable: React.FC<PaginatedTableProps> = ({ data, fileName }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); // State for the search query
   const rowsPerPage = 10;
 
   // Filter out empty rows (rows with no meaningful data)
@@ -14,15 +17,22 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
     return Object.values(user).some((value) => value); // Keep rows where at least one field has a value
   });
 
+  // Filter data based on search query
+  const searchFilteredData = filteredData.filter((user) => {
+    return Object.values(user).some((value) =>
+      String(value).toLowerCase().includes(searchQuery.toLowerCase())
+    ); // Match any value in the row with the search query
+  });
+
   // Calculate the index of the first and last row to display
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
 
   // Slice the data array to show only the rows for the current page
-  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = searchFilteredData.slice(indexOfFirstRow, indexOfLastRow);
 
   // Calculate total number of pages
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const totalPages = Math.ceil(searchFilteredData.length / rowsPerPage);
 
   // Handle page change
   const goToNextPage = () => {
@@ -36,12 +46,14 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
       setCurrentPage(currentPage - 1);
     }
   };
+
   // Handle page change
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
   };
+
   // Determine which page numbers to display
   const pageNumbersToShow = () => {
     const pageLinks = [];
@@ -87,7 +99,21 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
   };
 
   return (
-    <div>
+    <div className="PaginatedTable">
+      {/* Search input */}
+      <div className="name">
+        <h1>Displaying {fileName}</h1>
+      </div>
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+        />
+      </div>
+
       <div className="table_container overflow-scroll">
         <table className="table table-bordered">
           <thead>
@@ -166,15 +192,6 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
           </li>
         </ul>
       </nav>
-      {/* <div className="pagination-controls">
-        <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-        <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-          Next
-        </button>
-      </div> */}
     </div>
   );
 };
