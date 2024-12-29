@@ -5,7 +5,8 @@
   "scripts": {
     "start": "concurrently \"npm run dev --prefix server\" \"node start-client.js\"",
     "build": "npm run build --prefix client",
-    "test": "npm test --prefix client"
+    "test": "npm test --prefix client",
+    "install": "npm install --prefix server && npm install --prefix client"
   },
   "keywords": [],
   "author": "",
