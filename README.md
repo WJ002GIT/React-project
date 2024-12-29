@@ -10,7 +10,7 @@ To run the application:
    After installing client dependencies, navigate into the `server` directory and installs server dependencies using `npm install`.
    
 4. **Start the Application**:
-   Returns to the root folder and runs `npm start` to start both the frontend and backend.
+   Return to the root folder and runs `npm start` to start both the frontend and backend.
 
 5. **Enter front end**:
    Inside the terminal, the http address will be printed `Client Output:   ➜  Local:`, go to the listed http address to start the applicatio on your browser
