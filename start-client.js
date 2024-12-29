@@ -2,7 +2,7 @@ const sleep = require('sleep-promise');
 const { exec } = require('child_process');
 
 async function startClient() {
-  await sleep(3000); // Wait for 3 seconds
+  await sleep(1500); // Wait for 3 seconds
 
   const clientProcess = exec('npm run dev --prefix client');
 
