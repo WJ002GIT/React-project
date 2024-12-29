@@ -94,7 +94,8 @@ function AvailableFiles({ onHandleFile }: AvailableFilesProps) {
                 className="btn btn-danger btn-sm"
                 onClick={() => handleDelete(file)} // Ensure you handle delete action properly
               >
-                <i className="bi bi-trash"></i>{" "}
+                <i className="bi bi-trash"></i>
+                {"Delete"}
                 {/* Using Bootstrap icon for trash */}
               </button>
             </li>
