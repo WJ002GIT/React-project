@@ -1,5 +1,5 @@
 To run the application:
-(require npde version >= v20.9.0)
+(require node version >= v20.9.0)
 
 1. **Clone the Repository**: 
    Clone the repository from GitHub using `git clone` to your desire file.
