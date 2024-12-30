@@ -1,8 +1,8 @@
 import "./App.css";
 // import ListGroup from "./components/ListGroup";
+// import Alert from "./components/Alert";
+// import Button from "./components/Button";
 import { useState, useEffect } from "react";
-import Alert from "./components/Alert";
-import Button from "./components/Button";
 import Upload from "./components/upload";
 import Displaydata from "./components/Displaydata";
 import PaginatedTable from "./components/PaginaedTable";
@@ -10,27 +10,9 @@ import Papa from "papaparse";
 import AvailableFiles from "./components/AvailableFiles";
 
 function App() {
-  // interface User {
-  //   "First Name": string;
-  //   "Last Name": string;
-  // }
-
-  // let items = [
-  //   "NewYork",
-  //   "Singapore",
-  //   "Beijing",
-  //   "Munich",
-  //   "Jakarta",
-  //   "Bali",
-  //   "London",
-  // ];
-
-  // const handleSelectItem = (item: string) => {
-  //   console.log(item);
-  // };
-  const [alertVisible, setalertVisible] = useState<boolean>(false);
   // const [backendData, setBackendData] = useState<User | null>(null);
   // const [data, setData] = useState<User[] | null>(null);
+  const [alertVisible, setalertVisible] = useState<boolean>(false);
   const [data, setData] = useState<Array<Record<string, any>> | null>(null);
   const [keys, setKeys] = useState<string[]>([]);
   const { fetchCsvData } = Displaydata();
@@ -52,11 +34,12 @@ function App() {
 
   useEffect(() => {
     if (fileLocation) {
-      //fetch csv daa from srver address and send it to setData
+      //fetch csv data from srver address and send it to setData
+      // Add fileLocation as a dependency
       fetchCsvData(`${backendUrl}${fileLocation}`, setData);
       console.log("dynamic port location", `${backendUrl}${fileLocation}`);
     }
-  }, [fileLocation]); // Add fileLocation as a dependency
+  }, [fileLocation]); 
 
   if (data && data.length > 0) {
     console.log("this is my data", data);
@@ -86,6 +69,14 @@ function App() {
           <PaginatedTable data={data} />
         </section>
       )} */}
+      {/* Button to toggle alert visibility */}
+      {/* <section>
+        <Button onClick={() => setalertVisible(!alertVisible)} color="danger">
+          Toggle Alert
+        </Button>
+      </section> */}
+
+      
       {data && (
         <section className="table">
           <PaginatedTable
@@ -94,12 +85,6 @@ function App() {
           />
         </section>
       )}
-      {/* Button to toggle alert visibility */}
-      {/* <section>
-        <Button onClick={() => setalertVisible(!alertVisible)} color="danger">
-          Toggle Alert
-        </Button>
-      </section> */}
 
       {/* File Upload Section */}
       <section>

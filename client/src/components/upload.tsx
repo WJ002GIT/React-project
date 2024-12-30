@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 interface FileUploadProps {
   backendUrl: string;
-  onFileLocationUpdate: (location: string) => void; // Define prop type for callback
+  onFileLocationUpdate: (location: string) => void; 
 }
 
 interface FileListResponse {
@@ -43,7 +43,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   useEffect(() => {
     if (checkfiles.length > 0) {
-      console.log(checkfiles); // Logs the updated checkfiles array
+      console.log(checkfiles); 
     }
   }, [checkfiles]);
 
@@ -78,8 +78,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         onFileLocationUpdate(result.fileUrl);
 
         // Clear the file input after upload is complete
-        setFile(null); // Reset the file state
-        // Optionally, you can reset the input field visually as well:
+        setFile(null); 
         (document.querySelector("input[type=file]") as HTMLInputElement).value =
           "";
       } else {

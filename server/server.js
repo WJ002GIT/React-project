@@ -24,8 +24,9 @@ const storage = multer.diskStorage({
       //keep original upload file neame
       cb(null, path.join(__dirname, "uploads/"));
     },
+    // Keep the original filename
     filename: (req, file, cb) => {
-      cb(null, file.originalname); // Keep the original filename
+      cb(null, file.originalname); 
     },
   });
   
@@ -37,7 +38,7 @@ const storage = multer.diskStorage({
       return res.status(400).send('No file uploaded.');
     }
   
-    // Send the file path back to the client for further processing
+    // Send the file path back to the client
     res.json({ fileUrl: `/uploads/${req.file.filename}` });
   });
   
@@ -79,7 +80,7 @@ portfinder
       });
 
       if (!updated) {
-        updatedLines.push(`VITE_BACKEND_PORT=${port}`); // Add the line if it doesn't exist
+        updatedLines.push(`VITE_BACKEND_PORT=${port}`); // Add the line if doesn't exist
       }
 
       fs.writeFileSync(rootEnvPath, updatedLines.join('\n'), 'utf-8');
@@ -100,7 +101,7 @@ app.get("/api/files", (req, res) => {
       return res.status(500).json({ error: "Unable to read files" });
     }
 
-    // Return the list of files as a JSON response
+    // Return the list of files
     res.json({ files });
   });
 });
@@ -110,7 +111,7 @@ app.delete('/api/uploads/:filename', (req, res) => {
   const { filename } = req.params;
   const filePath = path.join(__dirname, 'uploads', filename);
 
-  // Check if the file exists using fs.access (non-deprecated method)
+  // Check if the file exists
   fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) {
       return res.status(404).json({ error: 'File not found' });

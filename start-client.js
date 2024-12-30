@@ -2,21 +2,19 @@ const sleep = require('sleep-promise');
 const { exec } = require('child_process');
 
 async function startClient() {
-  await sleep(1500); // Wait for 3 seconds
+  await sleep(1500); // Wait for 1.5 seconds
 
   const clientProcess = exec('npm run dev --prefix client');
 
-  // Log stdout (normal output)
+  // output log
   clientProcess.stdout.on('data', (data) => {
     console.log(`Client Output: ${data}`);
   });
-
-  // Log stderr (error output)
+  //error log
   clientProcess.stderr.on('data', (data) => {
     console.error(`Client Error: ${data}`);
   });
 
-  // Log when the process exits
   clientProcess.on('close', (code) => {
     if (code !== 0) {
       console.error(`Client process exited with code ${code}`);

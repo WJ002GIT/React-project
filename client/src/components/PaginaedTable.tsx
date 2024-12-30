@@ -3,25 +3,27 @@ import React, { useState } from "react";
 type User = Record<string, any>;
 
 interface PaginatedTableProps {
-  data: User[]; // Explicitly type the `data` prop
+  data: User[]; //type the data
   fileName: string | undefined;
 }
 
 const PaginatedTable: React.FC<PaginatedTableProps> = ({ data, fileName }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState(""); // State for the search query
+  const [searchQuery, setSearchQuery] = useState(""); 
   const rowsPerPage = 10;
 
   // Filter out empty rows (rows with no meaningful data)
   const filteredData = data.filter((user) => {
-    return Object.values(user).some((value) => value); // Keep rows where at least one field has a value
+    // Keep rows where at least one field has a value
+    return Object.values(user).some((value) => value);
   });
 
   // Filter data based on search query
   const searchFilteredData = filteredData.filter((user) => {
     return Object.values(user).some((value) =>
+      // Match any value in the row with the search query
       String(value).toLowerCase().includes(searchQuery.toLowerCase())
-    ); // Match any value in the row with the search query
+    ); 
   });
 
   // Calculate the index of the first and last row to display
@@ -54,10 +56,11 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data, fileName }) => {
     }
   };
 
-  // Determine which page numbers to display
+  // See which page numbers to show
   const pageNumbersToShow = () => {
     const pageLinks = [];
-    const maxVisiblePages = 2; // Max pages to show before ellipsis
+    // Max pages to show before ellipsis
+    const maxVisiblePages = 2; 
 
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(
@@ -118,7 +121,6 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data, fileName }) => {
         <table className="table table-bordered">
           <thead>
             <tr>
-              {/* Render table headers dynamically */}
               {data &&
                 data.length > 0 &&
                 Object.keys(data[0]).map((key) => <th key={key}>{key}</th>)}
@@ -132,7 +134,8 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data, fileName }) => {
               .map((user, index) => (
                 <tr key={index}>
                   {Object.values(user).map((value, i) => (
-                    <td key={i}>{value || "-"}</td> // Handle empty values by displaying "-"
+                    // empty values display "-"
+                    <td key={i}>{value || "-"}</td> 
                   ))}
                 </tr>
               ))}
@@ -140,7 +143,6 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data, fileName }) => {
         </table>
       </div>
 
-      {/* Pagination controls */}
       <nav aria-label="Page navigation">
         <ul className="pagination justify-content-center">
           {/* Previous Page */}
@@ -155,7 +157,7 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data, fileName }) => {
             </a>
           </li>
 
-          {/* Page Numbers with Ellipses */}
+          {/* ellipses pages*/}
           {pageNumbersToShow().map((page, index) => (
             <li
               key={index}

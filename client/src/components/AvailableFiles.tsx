@@ -8,7 +8,7 @@ interface FileListResponse {
 }
 
 interface AvailableFilesProps {
-  onHandleFile: (fileName: string) => void; // Add this prop to handle file name
+  onHandleFile: (fileName: string) => void; 
 }
 
 function AvailableFiles({ onHandleFile }: AvailableFilesProps) {
@@ -41,7 +41,8 @@ function AvailableFiles({ onHandleFile }: AvailableFilesProps) {
       });
 
       if (response.ok) {
-        setFiles(files.filter((file) => file !== fileName)); // Remove the deleted file from the list
+        // Remove the deleted file from the list
+        setFiles(files.filter((file) => file !== fileName));
 
         alert(`${fileName} is successfully deleted!`);
       } else {
@@ -92,11 +93,10 @@ function AvailableFiles({ onHandleFile }: AvailableFilesProps) {
 
               <button
                 className="btn btn-danger btn-sm"
-                onClick={() => handleDelete(file)} // Ensure you handle delete action properly
+                onClick={() => handleDelete(file)} 
               >
                 <i className="bi bi-trash"></i>
                 {"Delete"}
-                {/* Using Bootstrap icon for trash */}
               </button>
             </li>
           ))}

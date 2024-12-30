@@ -3,12 +3,10 @@
 import { ReactNode } from "react";
 
 interface Props {
-  //   children: string;
-  //if want to pass html content
   children: ReactNode;
   onClick: () => void;
   //color?: string;//? means it optional
-  color?: "primary" | "secondary" | "danger"; //can only set to one of these color
+  color?: "primary" | "secondary" | "danger"; 
 }
 
 const Button = ({ children, onClick, color = "primary" }: Props) => {
